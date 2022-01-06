@@ -1,6 +1,6 @@
 # React Git Users
 
-This project mimic the way github functionality, it allow users to easily search for github users using the app
+This project mimic the way github functionality works, it allow users to easily search for github users using the app
 
 ## Available Scripts
 
