@@ -1,10 +1,44 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
+import React from 'react'
+import { GithubContext } from '../context/context'
+import styled from 'styled-components'
+import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md'
 const Card = () => {
-  return <h2>card component</h2>;
-};
+  const { githubUser } = React.useContext(GithubContext)
+  const {
+    avatar_url,
+    html_url,
+    name,
+    company,
+    blog,
+    bio,
+    location,
+    twitter_username,
+  } = githubUser
+  return (
+    <Wrapper>
+      <header>
+        <img src={avatar_url} alt={name} />
+        <p>@{twitter_username || 'Ismail Jamiu'}</p>
+        <a href={html_url}>follow</a>
+        <p className='bio'>{bio}</p>
+        <div className='link'>
+          <p>
+            <MdBusiness></MdBusiness>
+            {company}
+          </p>
+          <p>
+            <MdLocationOn></MdLocationOn>
+            {location}
+          </p>
+          <a href={`https://${blog}`}>
+            <MdLink></MdLink>
+            {blog || 'my blog'}
+          </a>
+        </div>
+      </header>
+    </Wrapper>
+  )
+}
 const Wrapper = styled.article`
   background: var(--clr-white);
   padding: 1.5rem 2rem;
@@ -84,5 +118,5 @@ const Wrapper = styled.article`
       }
     }
   }
-`;
-export default Card;
+`
+export default Card
