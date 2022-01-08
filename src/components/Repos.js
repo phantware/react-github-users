@@ -1,9 +1,53 @@
+import { items } from 'fusioncharts'
 import React from 'react'
 import styled from 'styled-components'
 import { GithubContext } from '../context/context'
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts'
 const Repos = () => {
-  return <ExampleChart />
+  const { repos } = React.useContext(GithubContext)
+  const languages = repos.reduce((total, item) => {
+    const { language, stargazers_count } = item
+    if (!language) {
+      return total
+    }
+    if (!total[language]) {
+      total[language] = { label: language, value: 1, stars: stargazers_count }
+    } else {
+      total[language] = {
+        ...total[language],
+        value: total[language].value + 1,
+        stars: total[language].stars + stargazers_count,
+      }
+    }
+    return total
+  }, {})
+  const mostUsed = Object.values(languages)
+    .sort((a, b) => {
+      return b.value - a.value
+    })
+    .slice(0, 5)
+
+  // most stars per language
+
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return b.value - a.value
+    })
+    .map((item) => {
+      return { ...item, value: item.stars }
+    })
+    .slice(0, 5)
+  console.log(mostPopular)
+
+  return (
+    <section className='section'>
+      <Wrapper className='section-center'>
+        <Pie3D data={mostUsed} />
+        {/* <ExampleChart data={chartData} /> */}
+        <Doughnut2D data={mostPopular} />
+      </Wrapper>
+    </section>
+  )
 }
 
 const Wrapper = styled.div`
