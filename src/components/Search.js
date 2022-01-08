@@ -6,10 +6,12 @@ const Search = () => {
   const [user, setUser] = useState('')
 
   //Get thing from global context
-  const { requests, error } = useContext(GithubContext)
+  const { requests, error, searchGithubUser } = useContext(GithubContext)
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(user)
+    if (user) {
+      searchGithubUser(user)
+    }
   }
 
   return (
